@@ -7,22 +7,20 @@ from kitchen.models import Cook, Dish, DishType, Ingredient
 class CookAdmin(UserAdmin):
     list_display = UserAdmin.list_display + ("years_of_experience",)
     fieldsets = UserAdmin.fieldsets + (
-        (("Additional info", {"fields": ("years_of_experience",)}),)
+        ("Additional info", {"fields": ("years_of_experience",)}),
     )
     add_fieldsets = UserAdmin.add_fieldsets + (
         (
-            (
-                "Additional info",
-                {
-                    "fields": (
-                        "first_name",
-                        "last_name",
-                        "email",
-                        "years_of_experience",
-                    )
-                }
-            ),
-        )
+            "Additional info",
+            {
+                "fields": (
+                    "first_name",
+                    "last_name",
+                    "email",
+                    "years_of_experience",
+                )
+            }
+        ),
     )
 
 
@@ -33,7 +31,7 @@ class DishAdmin(admin.ModelAdmin):
     filter_horizontal = ("cooks", "ingredients")
 
     def display_cooks(self, obj):
-        return "".join([cook.username for cook in obj.cooks.all()])
+        return ", ".join([cook.username for cook in obj.cooks.all()])
 
     display_cooks.short_description = "Cooks"
 

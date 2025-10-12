@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Dish: {{ dish.name }}</h1>
+
+  <p><strong>Dish Type:</strong> {{ dish.dish_type.name }}</p>
+  <p><strong>Price:</strong> ${{ dish.price }}</p>
+  {% if dish.description %}
+    <p><strong>Description:</strong> {{ dish.description }}</p>
+  {% endif %}
+
+  <div class="mt-4">
+    {% if user.is_authenticated %}
+      <!-- Кнопка прив'язки/відв'язки страви -->
+      <form action="{% url 'kitchen:toggle-dish-assign' pk=dish.id %}" method="post">
+        {% csrf_token %}
+        {% if dish in user.dishes.all %}
+          <!-- Якщо страву вже готуємо - червона кнопка -->
+          <button type="submit" class="btn btn-danger btn-lg">
+            <i class="fas fa-times-circle"></i> I'm Not Cooking This Dish Anymore
+          </button>
+          <small class="form-text text-muted">
+            You are currently assigned to cook this dish. Click to remove yourself.
+          </small>
+        {% else %}
+          <!-- Якщо страву не готуємо - зелена кнопка -->
+          <button type="submit" class="btn btn-success btn-lg">
+            <i class="fas fa-check-circle"></i> I'm Cooking This Dish
+          </button>
+          <small class="form-text text-muted">
+            You are not assigned to this dish. Click to start cooking it.
+          </small>
+        {% endif %}
+      </form>
+    {% else %}
+      <div class="alert alert-info">
+        <a href="{% url 'login' %}?next={{ request.path }}">Login</a> to assign yourself to dishes.
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <h4>Cooks</h4>
+      {% if dish.cooks.all %}
+        <div class="list-group">
+          {% for cook in dish.cooks.all %}
+            <a href="{% url 'kitchen:cook-detail' pk=cook.pk %}"
+               class="list-group-item list-group-item-action {% if cook == user %}list-group-item-primary{% endif %}">
+              <div class="d-flex justify-content-between align-items-center">
+                <span>
+                  {{ cook.username }}
+                  {% if cook.first_name or cook.last_name %}
+                    ({{ cook.first_name }} {{ cook.last_name }})
+                  {% endif %}
+                </span>
+                {% if cook == user %}
+                  <span class="badge bg-primary">You</span>
+                {% endif %}
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="text-muted">No cooks assigned to this dish yet.</p>
+      {% endif %}
+    </div>
+
+    <div class="col-md-6">
+      <h4>Ingredients</h4>
+      {% if dish.ingredients.all %}
+        <div class="list-group">
+          {% for ingredient in dish.ingredients.all %}
+            <div class="list-group-item">
+              {{ ingredient.name }}
+              {% if ingredient.description %}
+                <small class="text-muted d-block">{{ ingredient.description }}</small>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="text-muted">No ingredients specified for this dish.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <a href="{% url 'kitchen:dish-update' pk=dish.pk %}" class="btn btn-secondary">Update Dish</a>
+    <a href="{% url 'kitchen:dish-delete' pk=dish.pk %}" class="btn btn-outline-danger">Delete Dish</a>
+  </div>
+{% endblock %}

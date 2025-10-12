@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <h1>
+    Ingredient List
+    <a href="{% url 'kitchen:ingredient-create' %}" class="btn btn-primary link-to-page">
+      Create
+    </a>
+  </h1>
+
+  {% if ingredient_list %}
+    <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+
+      {% for ingredient in ingredient_list %}
+        <tr>
+          <td>{{ ingredient.id }}</td>
+          <td>{{ ingredient.name }}</td>
+          <td>
+            <a href="{% url 'kitchen:ingredient-update' pk=ingredient.id %}" class="btn btn-outline-warning  btn-sm">
+              Update
+            </a>
+          </td>
+          <td>
+            <a style="color: red"
+              href="{% url 'kitchen:ingredient-delete' pk=ingredient.id %}" class="btn btn-outline-danger btn-sm">
+              Delete
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+  {% else %}
+    <p>There are no ingredients in the kitchen.</p>
+  {% endif %}
+
+  {% include "includes/pagination.html" %}
+{% endblock %}

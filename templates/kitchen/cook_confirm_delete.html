@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Delete cook?</h1>
+  <p>Are you sure you want to delete the cook: <strong>"{{ object.username }}"</strong>?</p>
+
+  {% if object.dishes.exists %}
+    <div class="alert alert-warning">
+      <strong>Warning:</strong> This cook is assigned to {{ object.dishes.count }} dish(es).
+      They will be removed from all assigned dishes.
+    </div>
+  {% endif %}
+
+  <form action="" method="post">
+    {% csrf_token %}
+
+    <div class="d-flex gap-2">
+      <input type="submit" value="Yes, delete" class="btn btn-danger">
+      <a href="{% url 'kitchen:cook-list' %}" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+{% endblock %}
