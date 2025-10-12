@@ -16,8 +16,6 @@
         <th>Name</th>
         <th>Price</th>
         <th>Dish Type</th>
-        <th>My Status</th>
-        <th>Cooks</th>
         <th>Update</th>
         <th>Delete</th>
       </tr>
@@ -27,47 +25,17 @@
           <td>
             <a href="{% url 'kitchen:dish-detail' pk=dish.id %}">{{ dish.id }}</a>
           </td>
-          <td>
-            <a href="{% url 'kitchen:dish-detail' pk=dish.id %}">{{ dish.name }}</a>
-          </td>
+          <td>{{ dish.name }}</td>
           <td>${{ dish.price }}</td>
           <td>{{ dish.dish_type.name }}</td>
-          <td>
-            {% if user.is_authenticated %}
-              {% if dish in user.dishes.all %}
-                <span class="badge bg-danger">Cooking</span>
-                <form method="post" action="{% url 'kitchen:toggle-dish-assign' pk=dish.id %}" class="d-inline">
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-outline-danger btn-sm" title="Stop cooking this dish">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </form>
-              {% else %}
-                <span class="badge bg-success">Available</span>
-                <form method="post" action="{% url 'kitchen:toggle-dish-assign' pk=dish.id %}" class="d-inline">
-                  {% csrf_token %}
-                  <button type="submit" class="btn btn-outline-success btn-sm" title="Start cooking this dish">
-                    <i class="fas fa-check"></i>
-                  </button>
-                </form>
-              {% endif %}
-            {% else %}
-              <span class="text-muted">Login to assign</span>
-            {% endif %}
-          </td>
-          <td>
-            <span class="badge bg-primary">{{ dish.cooks.count }}</span>
-            {% if dish in user.dishes.all %}
-              <small class="text-muted d-block">You cook this</small>
-            {% endif %}
-          </td>
           <td>
             <a href="{% url 'kitchen:dish-update' pk=dish.id %}" class="btn btn-outline-warning btn-sm">
               Update
             </a>
           </td>
           <td>
-            <a href="{% url 'kitchen:dish-delete' pk=dish.id %}" class="btn btn-outline-danger btn-sm">
+            <a style="color: red"
+              href="{% url 'kitchen:dish-delete' pk=dish.id %}" class="btn btn-outline-danger btn-sm">
               Delete
             </a>
           </td>
