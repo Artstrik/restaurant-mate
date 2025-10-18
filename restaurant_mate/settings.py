@@ -67,6 +67,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "kitchen.context_processors.cfg_assets_root"
             ],
         },
     },
@@ -124,6 +125,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 STATIC_URL = "static/"
 
+ASSETS_ROOT = "/static/assets"
+
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
@@ -138,8 +141,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "kitchen.Cook"
 
 LOGIN_REDIRECT_URL = "/kitchen/"
-LOGOUT_REDIRECT_URL = "login"
-LOGIN_URL = "login"
+LOGOUT_REDIRECT_URL = "/accounts/login/"
+LOGIN_URL = "/accounts/login/"
 
 INTERNAL_IPS = [
     "127.0.0.1",
