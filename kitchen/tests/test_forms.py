@@ -8,7 +8,7 @@ from kitchen.forms import (
     CookSearchForm,
     DishSearchForm,
     DishTypeSearchForm,
-    IngredientSearchForm
+    IngredientSearchForm,
 )
 from kitchen.models import DishType, Ingredient, Dish
 
@@ -19,11 +19,14 @@ class CookCreationFormTests(TestCase):
     def test_form_has_correct_fields(self):
         form = CookCreationForm()
         expected_fields = {
-            "username", "password1", "password2",
-            "years_of_experience", "first_name", "last_name"
+            "username",
+            "password1",
+            "password2",
+            "years_of_experience",
+            "first_name",
+            "last_name",
         }
         self.assertEqual(set(form.fields.keys()), expected_fields)
-
 
     def test_form_valid_data(self):
         form_data = {
@@ -32,7 +35,7 @@ class CookCreationFormTests(TestCase):
             "password2": "testpass123",
             "first_name": "John",
             "last_name": "Doe",
-            "years_of_experience": 5
+            "years_of_experience": 5,
         }
         form = CookCreationForm(data=form_data)
         self.assertTrue(form.is_valid())
@@ -44,7 +47,7 @@ class CookCreationFormTests(TestCase):
             "password2": "differentpass",
             "first_name": "John",
             "last_name": "Doe",
-            "years_of_experience": 5
+            "years_of_experience": 5,
         }
         form = CookCreationForm(data=form_data)
         self.assertFalse(form.is_valid())
@@ -55,16 +58,17 @@ class CookCreationFormTests(TestCase):
 class CookExperienceUpdateFormTests(TestCase):
     def setUp(self):
         self.cook = User.objects.create_user(
-            username="testcook",
-            password="testpass123",
-            years_of_experience=5
+            username="testcook", password="testpass123", years_of_experience=5
         )
 
     def test_form_has_correct_fields(self):
         form = CookExperienceUpdateForm()
         expected_fields = [
-            "username", "first_name", "last_name",
-            "email", "years_of_experience"
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "years_of_experience",
         ]
         self.assertEqual(list(form.fields.keys()), expected_fields)
 
@@ -74,7 +78,7 @@ class CookExperienceUpdateFormTests(TestCase):
             "first_name": "John",
             "last_name": "Doe",
             "email": "john@example.com",
-            "years_of_experience": 10
+            "years_of_experience": 10,
         }
         form = CookExperienceUpdateForm(data=form_data, instance=self.cook)
         self.assertTrue(form.is_valid())
@@ -85,7 +89,7 @@ class CookExperienceUpdateFormTests(TestCase):
             "first_name": "John",
             "last_name": "Doe",
             "email": "john@example.com",
-            "years_of_experience": -5
+            "years_of_experience": -5,
         }
         form = CookExperienceUpdateForm(data=form_data, instance=self.cook)
         self.assertFalse(form.is_valid())
@@ -98,7 +102,7 @@ class CookExperienceUpdateFormTests(TestCase):
             "first_name": "John",
             "last_name": "Doe",
             "email": "john@example.com",
-            "years_of_experience": 55
+            "years_of_experience": 55,
         }
         form = CookExperienceUpdateForm(data=form_data, instance=self.cook)
         self.assertFalse(form.is_valid())
@@ -118,20 +122,23 @@ class DishFormTests(TestCase):
     def test_form_has_correct_fields(self):
         form = DishForm()
         expected_fields = [
-            "name", "description", "price", "dish_type",
-            "cooks", "ingredients"
+            "name",
+            "description",
+            "price",
+            "dish_type",
+            "cooks",
+            "ingredients",
         ]
         self.assertEqual(list(form.fields.keys()), expected_fields)
 
     def test_form_widgets(self):
         form = DishForm()
         self.assertEqual(
-            form.fields["cooks"].widget.__class__.__name__,
-            "CheckboxSelectMultiple"
+            form.fields["cooks"].widget.__class__.__name__, "CheckboxSelectMultiple"
         )
         self.assertEqual(
             form.fields["ingredients"].widget.__class__.__name__,
-            "CheckboxSelectMultiple"
+            "CheckboxSelectMultiple",
         )
 
     def test_form_required_fields(self):
@@ -146,7 +153,7 @@ class DishFormTests(TestCase):
             "price": 15.50,
             "dish_type": self.dish_type.id,
             "cooks": [self.cook1.id],
-            "ingredients": [self.ingredient1.id, self.ingredient2.id]
+            "ingredients": [self.ingredient1.id, self.ingredient2.id],
         }
         form = DishForm(data=form_data)
         self.assertTrue(form.is_valid())
@@ -163,10 +170,7 @@ class CookSearchFormTests(TestCase):
         field = form.fields["username"]
         self.assertFalse(field.required)
         self.assertEqual(field.label, "")
-        self.assertEqual(
-            field.widget.attrs["placeholder"],
-            "Search by username"
-        )
+        self.assertEqual(field.widget.attrs["placeholder"], "Search by username")
 
     def test_form_valid_data(self):
         form_data = {"username": "test"}
@@ -189,10 +193,7 @@ class DishSearchFormTests(TestCase):
         field = form.fields["name"]
         self.assertFalse(field.required)
         self.assertEqual(field.label, "")
-        self.assertEqual(
-            field.widget.attrs["placeholder"],
-            "Search by dish name"
-        )
+        self.assertEqual(field.widget.attrs["placeholder"], "Search by dish name")
 
     def test_form_valid_data(self):
         form_data = {"name": "pasta"}
@@ -210,10 +211,7 @@ class DishTypeSearchFormTests(TestCase):
         field = form.fields["name"]
         self.assertFalse(field.required)
         self.assertEqual(field.label, "")
-        self.assertEqual(
-            field.widget.attrs["placeholder"],
-            "Search by dish type"
-        )
+        self.assertEqual(field.widget.attrs["placeholder"], "Search by dish type")
 
     def test_form_valid_data(self):
         form_data = {"name": "main"}
@@ -231,10 +229,7 @@ class IngredientSearchFormTests(TestCase):
         field = form.fields["name"]
         self.assertFalse(field.required)
         self.assertEqual(field.label, "")
-        self.assertEqual(
-            field.widget.attrs["placeholder"],
-            "Search by ingredient"
-        )
+        self.assertEqual(field.widget.attrs["placeholder"], "Search by ingredient")
 
     def test_form_valid_data(self):
         form_data = {"name": "tomato"}

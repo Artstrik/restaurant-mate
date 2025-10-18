@@ -97,13 +97,13 @@ class PrivateDishTests(TestCase):
             name="Pasta",
             description="Test pasta",
             price=15.00,
-            dish_type=self.dish_type
+            dish_type=self.dish_type,
         )
         Dish.objects.create(
             name="Pizza",
             description="Test pizza",
             price=20.00,
-            dish_type=self.dish_type
+            dish_type=self.dish_type,
         )
         response = self.client.get(DISH_URL)
         self.assertEqual(response.status_code, 200)
@@ -119,13 +119,13 @@ class PrivateDishTests(TestCase):
             name="Pizza",
             description="Test pizza",
             price=20.00,
-            dish_type=self.dish_type
+            dish_type=self.dish_type,
         )
         Dish.objects.create(
             name="Pasta",
             description="Test pasta",
             price=15.00,
-            dish_type=self.dish_type
+            dish_type=self.dish_type,
         )
         response = self.client.get(DISH_URL)
         dishes = list(response.context["dish_list"])
@@ -142,7 +142,7 @@ class PrivateDishTests(TestCase):
                 name=f"Dish {i}",
                 description=f"Description {i}",
                 price=10.00 + i,
-                dish_type=self.dish_type
+                dish_type=self.dish_type,
             )
         response = self.client.get(DISH_URL)
         self.assertEqual(response.status_code, 200)
@@ -153,13 +153,13 @@ class PrivateDishTests(TestCase):
             name="Pasta Carbonara",
             description="Creamy pasta",
             price=15.00,
-            dish_type=self.dish_type
+            dish_type=self.dish_type,
         )
         Dish.objects.create(
             name="Margherita Pizza",
             description="Classic pizza",
             price=18.00,
-            dish_type=self.dish_type
+            dish_type=self.dish_type,
         )
         response = self.client.get(DISH_URL + "?name=Pizza")
         self.assertEqual(response.status_code, 200)
@@ -239,7 +239,7 @@ class PublicDishDetailTests(TestCase):
             name="Test Dish",
             description="Test description",
             price=15.00,
-            dish_type=self.dish_type
+            dish_type=self.dish_type,
         )
 
     def test_login_required(self):
@@ -260,7 +260,7 @@ class PrivateDishDetailTests(TestCase):
             name="Test Dish",
             description="Test description",
             price=15.00,
-            dish_type=self.dish_type
+            dish_type=self.dish_type,
         )
 
     def test_retrieve_dish_detail(self):
@@ -293,9 +293,7 @@ class PrivateCookDetailTests(TestCase):
         self.client = Client()
         self.client.force_login(self.user)
         self.cook = User.objects.create_user(
-            username="testcook",
-            password="test123",
-            years_of_experience=5
+            username="testcook", password="test123", years_of_experience=5
         )
 
     def test_retrieve_cook_detail(self):

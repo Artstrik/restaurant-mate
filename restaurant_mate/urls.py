@@ -8,7 +8,7 @@ from django.views.generic import RedirectView
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("kitchen/", include("kitchen.urls", namespace="kitchen")),
-    path("", RedirectView.as_view(pattern_name='kitchen:index')),  # ← Додати це
-    path("accounts/", include("django.contrib.auth.urls")),  # ← Змінити шлях
+    path("", RedirectView.as_view(pattern_name='kitchen:index')),
+    path("accounts/", include("django.contrib.auth.urls")),
     path("__debug__/", include("debug_toolbar.urls")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

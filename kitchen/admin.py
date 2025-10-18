@@ -19,7 +19,7 @@ class CookAdmin(UserAdmin):
                     "email",
                     "years_of_experience",
                 )
-            }
+            },
         ),
     )
 
@@ -27,7 +27,12 @@ class CookAdmin(UserAdmin):
 @admin.register(Dish)
 class DishAdmin(admin.ModelAdmin):
     search_fields = ("name",)
-    list_display = ("name", "price", "dish_type", "display_cooks",)
+    list_display = (
+        "name",
+        "price",
+        "dish_type",
+        "display_cooks",
+    )
     filter_horizontal = ("cooks", "ingredients")
 
     def display_cooks(self, obj):

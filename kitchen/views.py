@@ -14,7 +14,7 @@ from .forms import (
     CookSearchForm,
     DishSearchForm,
     DishTypeSearchForm,
-    IngredientSearchForm
+    IngredientSearchForm,
 )
 
 
@@ -51,8 +51,7 @@ class DishTypeListView(LoginRequiredMixin, generic.ListView):
         context = super(DishTypeListView, self).get_context_data(**kwargs)
         dish_type_name = self.request.GET.get("name", "")
         context["search_form"] = DishTypeSearchForm(
-            initial={"name": dish_type_name}
-        )
+            initial={"name": dish_type_name})
         return context
 
     def get_queryset(self):
@@ -90,8 +89,7 @@ class IngredientListView(LoginRequiredMixin, generic.ListView):
         context = super(IngredientListView, self).get_context_data(**kwargs)
         ingredient_name = self.request.GET.get("name", "")
         context["search_form"] = IngredientSearchForm(
-            initial={"name": ingredient_name}
-        )
+            initial={"name": ingredient_name})
         return context
 
     def get_queryset(self):
@@ -126,13 +124,13 @@ class DishListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(DishListView, self).get_context_data(**kwargs)
         dish_name = self.request.GET.get("name", "")
-        context["search_form"] = DishSearchForm(
-            initial={"name": dish_name}
-        )
+        context["search_form"] = DishSearchForm(initial={"name": dish_name})
         return context
 
     def get_queryset(self):
-        queryset = Dish.objects.select_related("dish_type").prefetch_related("ingredients", "cooks")
+        queryset = Dish.objects.select_related("dish_type").prefetch_related(
+            "ingredients", "cooks"
+        )
         dish_name = self.request.GET.get("name")
         if dish_name:
             return queryset.filter(name__icontains=dish_name)
@@ -141,7 +139,9 @@ class DishListView(LoginRequiredMixin, generic.ListView):
 
 class DishDetailView(LoginRequiredMixin, generic.DetailView):
     model = Dish
-    queryset = Dish.objects.select_related("dish_type").prefetch_related("ingredients", "cooks")
+    queryset = Dish.objects.select_related("dish_type").prefetch_related(
+        "ingredients", "cooks"
+    )
 
 
 class DishCreateView(LoginRequiredMixin, generic.CreateView):
@@ -169,9 +169,7 @@ class CookListView(LoginRequiredMixin, generic.ListView):
         context = super(CookListView, self).get_context_data(**kwargs)
         username = self.request.GET.get("username", "")
         context["username"] = username
-        context["search_form"] = CookSearchForm(
-            initial={"username": username}
-        )
+        context["search_form"] = CookSearchForm(initial={"username": username})
         return context
 
     def get_queryset(self):
@@ -184,7 +182,9 @@ class CookListView(LoginRequiredMixin, generic.ListView):
 
 class CookDetailView(LoginRequiredMixin, generic.DetailView):
     model = Cook
-    queryset = Cook.objects.all().prefetch_related("dishes__dish_type", "dishes__ingredients")
+    queryset = Cook.objects.all().prefetch_related(
+        "dishes__dish_type", "dishes__ingredients"
+    )
 
 
 class CookCreateView(LoginRequiredMixin, generic.CreateView):

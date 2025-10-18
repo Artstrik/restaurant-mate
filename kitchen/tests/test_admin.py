@@ -19,13 +19,9 @@ class AdminSiteTests(TestCase):
             years_of_experience=10,
         )
 
-        self.dish_type = DishType.objects.create(
-            name="testdishtype"
-        )
+        self.dish_type = DishType.objects.create(name="testdishtype")
 
-        self.ingredient = Ingredient.objects.create(
-            name="testingredient"
-        )
+        self.ingredient = Ingredient.objects.create(name="testingredient")
 
         self.dish = Dish.objects.create(
             name="testdish",
@@ -76,7 +72,9 @@ class AdminSiteTests(TestCase):
         """
         url = reverse("admin:kitchen_dish_changelist")
         res = self.client.get(url)
-        self.assertContains(res, self.cook.username)  # Проверяем, что имя повара отображается
+        self.assertContains(
+            res, self.cook.username
+        )  # Проверяем, что имя повара отображается
         self.assertContains(res, "Cooks")  # Проверяем заголовок кастомного столбца
 
     def test_dish_search_by_name(self):
@@ -109,7 +107,11 @@ class AdminSiteTests(TestCase):
         """
         Test that ingredient admin page supports search by name.
         """
-        url = reverse("admin:kitchen_ingredient_changelist") + "?q=" + self.ingredient.name
+        url = (
+            reverse("admin:kitchen_ingredient_changelist")
+            + "?q="
+            + self.ingredient.name
+        )
         res = self.client.get(url)
         self.assertContains(res, self.ingredient.name)
 
