@@ -2,7 +2,6 @@
   {% if user.is_authenticated %}
     <li class="list-group-item">User: <a href="{{ user.get_absolute_url }}">{{ user.get_username }}</a></li>
     <li class="list-group-item">
-      <!-- Використовуємо POST форму для логауту -->
       <form method="post" action="{% url 'logout' %}">
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ request.path }}">
