@@ -1,0 +1,58 @@
+/* Общие корректировки для кнопок пагинации в стиле главной страницы */
+.pagination .pagination-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 56px;         /* минимальная ширина для ровного вида */
+  max-width: 220px;        /* ограничение, чтобы текст не растягивал кнопку */
+  height: 44px;            /* синхронно с btn-sm + дизайн */
+  padding: 0 14px;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Счётчик — выглядит как кнопка, но не кликабельный и с белым текстом */
+.pagination .page-counter {
+  pointer-events: none;    /* не интерактивен */
+  opacity: 0.95;
+  color: #ffffff !important;          /* Белый цвет текста */
+  background: linear-gradient(195deg, #49a3f1, #1A73E8) !important; /* Градиент для контраста */
+}
+
+/* Disabled стили (для span с disabled) — делаем видимыми, но неактивными */
+.pagination .pagination-btn.disabled,
+.pagination .pagination-btn[aria-disabled="true"] {
+  pointer-events: none;
+  opacity: 0.65;
+  filter: grayscale(0.02);
+  transform: none;
+  box-shadow: none;        /* убрать активные тени у неактивных */
+}
+
+/* Hover/active — сохраняем визуальный эффект только для ссылок */
+.pagination .pagination-btn:not(.disabled):hover,
+.pagination .pagination-btn:not(.disabled):focus {
+  transform: translateY(-3px);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+/* Уменьшаем размеры на узких экранах */
+@media (max-width: 420px) {
+  .pagination .pagination-btn {
+    min-width: 44px;
+    height: 36px;
+    padding: 0 8px;
+    font-size: 13px;
+  }
+  .pagination .page-counter {
+    max-width: 120px;
+    color: #ffffff !important; /* Белый цвет на мобильных */
+  }
+}
+
+/* Если нужно дополнительно выровнять вертикально (опционально) */
+.pagination { line-height: 1; }

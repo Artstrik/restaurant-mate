@@ -1,0 +1,27 @@
+{% if is_paginated %}
+  <div class="pagination d-flex justify-content-center align-items-center flex-wrap gap-2 mt-3">
+    {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
+         class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0 pagination-btn"
+         aria-label="previous page">
+        prev
+      </a>
+    {% else %}
+      <span class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0 pagination-btn disabled" aria-disabled="true">prev</span>
+    {% endif %}
+
+    <span class="page-counter btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0 pagination-btn disabled" aria-hidden="true">
+      {{ page_obj.number }} of {{ paginator.num_pages }}
+    </span>
+
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
+         class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0 pagination-btn"
+         aria-label="next page">
+        next
+      </a>
+    {% else %}
+      <span class="btn btn-sm bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0 pagination-btn disabled" aria-disabled="true">next</span>
+    {% endif %}
+  </div>
+{% endif %}
