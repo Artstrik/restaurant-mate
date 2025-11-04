@@ -12,8 +12,13 @@ mypy_extensions==1.1.0
 packaging==25.0
 pathspec==0.12.1
 platformdirs==4.4.0
+psycopg2-binary==2.9.10
 pycodestyle==2.14.0
 pyflakes==3.4.0
+python-dotenv==1.2.1
 pytokens==0.1.10
 sqlparse==0.5.3
+tomli==2.3.0
+typing_extensions==4.15.0
 tzdata==2025.2
+whitenoise==6.11.0
