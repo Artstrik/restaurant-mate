@@ -4,7 +4,10 @@ from .base import *
 #DEBUG = os.environ.get("DJANGO_DEBUG", "") != "False"
 DEBUG = False
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = [
+    "restaurant-mate-5b8n.onrender.com",
+    "127.0.0.1",
+    "localhost"]
 
 
 # Database
