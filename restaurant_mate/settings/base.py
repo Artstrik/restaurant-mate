@@ -114,7 +114,7 @@ USE_TZ = True
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 STATIC_URL = "static/"
-STATIC_ROOT ="staticfiles/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 ASSETS_ROOT = "/static/assets"
 
